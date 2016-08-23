@@ -8,12 +8,10 @@
  	void *arr[20];
  	size_t s;
  
-@@ -23,6 +24,9 @@
+@@ -23,6 +24,7 @@
  
  	fprintf(stderr, "Error: signal %d:\n", sig);
  	backtrace_symbols_fd(arr, s, STDERR_FILENO);
-+#else
-+	proxy_debug(PROXY_DEBUG_GENERIC, 4, "Aborting - stack trace not available on this platform\n");
 +#endif
  //#ifdef SYS_gettid
  	// try to generate a core dump signaling again the thread
