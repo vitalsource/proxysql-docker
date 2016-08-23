@@ -1,0 +1,20 @@
+--- ProxySQL_GloVars.cpp
++++ ProxySQL_GloVars.cpp.new
+@@ -16,6 +16,7 @@
+ #ifdef DEBUG
+ //	malloc_stats_print(NULL, NULL, "");
+ #endif
++#ifdef __GLIBC__
+ 	void *arr[20];
+ 	size_t s;
+ 
+@@ -23,6 +24,9 @@
+ 
+ 	fprintf(stderr, "Error: signal %d:\n", sig);
+ 	backtrace_symbols_fd(arr, s, STDERR_FILENO);
++#else
++	proxy_debug(PROXY_DEBUG_GENERIC, 4, "Aborting - stack trace not available on this platform\n");
++#endif
+ //#ifdef SYS_gettid
+ 	// try to generate a core dump signaling again the thread
+ 	signal(sig, SIG_DFL);
