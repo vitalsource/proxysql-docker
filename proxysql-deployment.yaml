@@ -1,0 +1,45 @@
+---
+  apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    labels:
+      name: proxysql
+    name: proxysql
+    namespace: default
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: proxysql
+    strategy:
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 1
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          name: proxysql
+          tier: backend
+      spec:
+        containers:
+        - image: my-alpine-proxysql-build
+          imagePullPolicy: Always
+          name: proxysql
+          ports:
+          - containerPort: 6032
+            protocol: TCP
+          - containerPort: 6033
+            protocol: TCP
+          volumeMounts:
+            - name: proxysql-config
+              mountPath: /proxysql
+        volumes:
+        - name: proxysql-config
+          secret:
+            secretName: proxysql-config
+            items:
+            - key: config
+              path: proxysql.cnf
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
