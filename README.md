@@ -14,7 +14,7 @@ docker run -it --rm --entrypoint ash my-alpine-proxysql-build
 ```
 
 To bootstrap this container with the proper replication hostgroup configuration, a bit of hackery is needed
-until [v1.2.2 is released](https://github.com/sysown/proxysql/issues/648) is resolved.
+until [v1.2.2 is released](https://github.com/sysown/proxysql/issues/648).
 
 The process involves running a donor container, setting the replication hostgroup config as you want it, then copying
 the sqlite3 database file out of the container then modifying the tables so we can use it as a seed database for the
