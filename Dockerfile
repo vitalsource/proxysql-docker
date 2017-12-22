@@ -9,7 +9,7 @@ RUN apk update && \
     git clone https://github.com/sysown/proxysql.git && \
     cd proxysql && \
     git checkout v1.4.4 && \
-    make && \
+    NOJEMALLOC=1 make && \
     cp src/proxysql /usr/bin/proxysql && \
     apk del build-depends && \
     cd && rm -rf /tmp/* /var/cache/apk/* 
