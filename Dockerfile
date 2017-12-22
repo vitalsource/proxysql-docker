@@ -14,4 +14,5 @@ MAINTAINER Ryan Schwartz <ryan.schwartz@ingramcontent.com>
 RUN apk add --no-cache -t runtime-depends libgcc libstdc++ libcrypto1.0 libssl1.0
 COPY --from=builder /tmp/proxysql/src/proxysql /usr/bin/proxysql
 COPY proxysql.cnf /proxysql/proxysql.cnf
+RUN mkdir /var/lib/proxysql
 ENTRYPOINT ["proxysql", "-f", "-c", "/proxysql/proxysql.cnf"]
